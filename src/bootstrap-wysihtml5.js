@@ -117,6 +117,15 @@
             "</li>";
         },
 
+        "format-code": function(locale, options) {
+	          var size = (options && options.size) ? ' btn-'+options.size : '';
+	          return "<li>" +
+	            "<div class='btn-group'>" +
+	              "<a class='btn " + size + "' data-wysihtml5-action='formatCode' title='" + locale.formatCode.highlight + "'><i class='icon-list-alt'></i></a>" +
+	            "</div>" +
+	          "</li>";
+         },
+
         "color": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li class='dropdown'>" +
@@ -223,6 +232,10 @@
                     if(key === "video") {
                         this.initInsertVideo(toolbar);
                     }
+
+                    if (key == "format-code") {
+                        this.initFormatCode(toolbar);
+                    }
                 }
             }
 
@@ -253,6 +266,14 @@
             var changeViewSelector = "a[data-wysihtml5-action='change_view']";
             toolbar.find(changeViewSelector).click(function(e) {
                 toolbar.find('a.btn').not(changeViewSelector).toggleClass('disabled');
+            });
+        },
+
+        initFormatCode: function (toolbar) {
+            var self = this;
+            var formatCodeSelector = "a[data-wysihtml5-action='formatCode']";
+            toolbar.find(formatCodeSelector).click(function (e) {
+                self.editor.composer.commands.exec("formatCode");
             });
         },
 
@@ -470,10 +491,11 @@
         "color": false,
         "emphasis": true,
         "lists": true,
-        "html": true,
+        "html": false,
         "link": true,
         "image": true,
-        "video": true,
+        "video": false,
+        "format-code": false,
         events: {},
         parserRules: {
             classes: {
@@ -601,6 +623,9 @@
                 navy: "Navy",
                 blue: "Blue",
                 orange: "Orange"
+            },
+            formatCode: {
+                highlight: "Highlight Code"
             }
         }
     };
@@ -744,5 +769,49 @@
     exec: function (code,attr){
       return code.substring(parseInt(code.indexOf(attr))+attr.length + 2,code.length).split("\" ")[0];
     }  
+  };
+}(wysihtml5));
+
+(function(wysihtml5) {
+  wysihtml5.commands.formatCode = {
+  	exec: function(composer) {
+
+        var pre = this.state(composer);
+        
+        if (pre) {
+            
+            // caret is already within a <pre><code>...</code></pre>
+            composer.selection.executeAndRestore(function () {
+                var codeSelector = pre.querySelector("code");
+                wysihtml5.dom.replaceWithChildNodes(pre);
+                if (codeSelector) {
+                    wysihtml5.dom.replaceWithChildNodes(pre);
+                    hljs.highlightBlock(codeSelector);
+                }
+            });
+        } else {
+                        
+            // Wrap in <pre><code>...</code></pre>
+            var range = composer.selection.getRange();
+
+            if (!range) return false;
+
+            var selectedNodes = range.extractContents(),
+                preElem = composer.doc.createElement("pre"),
+                codeElem = composer.doc.createElement("code");
+            
+            preElem.appendChild(codeElem);
+            codeElem.appendChild(selectedNodes);
+            range.insertNode(preElem);
+            hljs.highlightBlock(codeElem);
+            composer.selection.selectNode(preElem);
+            
+        }
+  	},
+
+  	state: function(composer) {        
+        var selectedNode = composer.selection.getSelectedNode();
+        return wysihtml5.dom.getParentElement(selectedNode, { nodeName: "CODE" }) && wysihtml5.dom.getParentElement(selectedNode, { nodeName: "PRE" });
+    }
   };
 }(wysihtml5));
