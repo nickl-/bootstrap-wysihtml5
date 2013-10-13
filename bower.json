@@ -6,5 +6,5 @@
         "src/bootstrap-wysihtml5.css", 
         "lib/js/wysihtml5-0.5.0.js",
         "src/bootstrap-wysihtml5.js"
-    ],
+    ]
 }
