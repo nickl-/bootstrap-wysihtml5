@@ -649,7 +649,7 @@
                 "pre": 1
             }
         },
-        stylesheets: ["./lib/css/wysiwyg-color.css"], // (path_to_project/lib/css/wysiwyg-color.css)
+        stylesheets: ["/assets/bootstrap-wysihtml5/lib/css/wysiwyg-color.css"], // (path_to_project/lib/css/wysiwyg-color.css)
 //        toolbar: {
 //            speech: '<li><a class="btn" data-wysihtml5-command="insertSpeech" title="Voice input" href="javascript:;" unselectable="on"><i class="iconic-mic"></i></a></li>'
 //        },
