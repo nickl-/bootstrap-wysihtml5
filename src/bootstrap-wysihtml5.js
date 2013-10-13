@@ -779,7 +779,7 @@
             return video && video.src;
         }
     };
-}(wysihtml5));
+})(wysihtml5);
 
 (function(wysihtml5) {
   wysihtml5.commands.insertEmbedVideo = {
@@ -858,4 +858,4 @@
         return wysihtml5.dom.getParentElement(selectedNode, { nodeName: "CODE" }) && wysihtml5.dom.getParentElement(selectedNode, { nodeName: "PRE" });
     }
   };
-}(wysihtml5));
+})(wysihtml5);
