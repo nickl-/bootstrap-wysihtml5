@@ -131,6 +131,15 @@
 	          "</li>";
          },
 
+        "speech": function(locale, options) {
+	          var size = (options && options.size) ? ' btn-'+options.size : '';
+	          return "<li>" +
+	            "<div class='btn-group'>" +
+	              "<a class='btn " + size + "' data-wysihtml5-command='insertSpeech' title='" + locale.speech.insert + "'><i class='iconic-mic'></i></a>" +
+	            "</div>" +
+	          "</li>";
+         },
+
         "color": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li class='dropdown'>" +
@@ -242,6 +251,13 @@
                     if (key == "format-code") {
                         this.initFormatCode(toolbar);
                     }
+
+//                    if(key === "speech") {
+//                        var wh_editor = new window.wysihtml5.Editor(el, options);
+//                        this.initInsertSpeech(toolbar, wh_editor);
+//
+//                    }
+
                 }
             }
 
@@ -284,6 +300,29 @@
                 self.editor.composer.commands.exec("formatCode");
             });
         },
+
+//        initInsertSpeech: function (toolbar, wh_editor) {
+//            var self = this,
+//                wh_toolbar = new window.wysihtml5.toolbar.Toolbar(wh_editor, toolbar);
+
+//            var wh_editor = new window.wysihtml5.Editor(el, options),
+//                wh_toolbar = new window.wysihtml5.toolbar.Toolbar(wh_editor, toolbar);
+//            {
+//                toolbar:        toolbar,
+//                stylesheets:    "css/stylesheet.css",
+//                parserRules:    wysihtml5ParserRules,
+//                useLineBreaks:  false
+//            });
+
+//            self.container.querySelectorAll("[data-wysihtml5-command=insertSpeech]");
+//            toolbar.find("a[data-wysihtml5-command='insertSpeech']").click(function(e) {
+//                self.editor.composer.commands.exec("insertSpeech");
+//            });
+//            var formatCodeSelector = "a[data-wysihtml5-action='formatCode']";
+//            toolbar.find(formatCodeSelector).click(function (e) {
+//                self.editor.composer.commands.exec("formatCode");
+//            });
+//        },
 
         initInsertImage: function(toolbar, fileUploadOpts) {
             var self = this;
@@ -610,6 +649,9 @@
             }
         },
         stylesheets: ["./lib/css/wysiwyg-color.css"], // (path_to_project/lib/css/wysiwyg-color.css)
+//        toolbar: {
+//            speech: '<li><a class="btn" data-wysihtml5-command="insertSpeech" title="Voice input" href="javascript:;" unselectable="on"><i class="iconic-mic"></i></a></li>'
+//        },
         locale: "en"
     };
 
@@ -672,6 +714,9 @@
             },
             formatCode: {
                 highlight: "Highlight Code"
+            },
+            speech: {
+                insert: 'Insert Speech recognition.'
             }
         }
     };
