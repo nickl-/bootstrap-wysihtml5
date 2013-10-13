@@ -7,11 +7,11 @@
     "src/bootstrap-wysihtml5.js"
   ],
   "homepage": "https://github.com/nickl-/bootstrap-wysihtml5",
-  "_release": "e37bb0c9c3",
+  "_release": "0158331d49",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "e37bb0c9c3d28a3a36bfba182432ce36f4fab149"
+    "commit": "0158331d49a20f938b7756dc139e8f68fa455f37"
   },
   "_source": "git://github.com/nickl-/bootstrap-wysihtml5.git",
   "_target": "*",
