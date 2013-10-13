@@ -854,7 +854,7 @@
       wysihtml5.commands.insertVideo.value(element);
     }
   };
-}(wysihtml5));
+})(wysihtml5);
 
 (function(wysihtml5) {
   wysihtml5.commands.getAttributeValue = {
@@ -862,7 +862,7 @@
       return code.substring(parseInt(code.indexOf(attr))+attr.length + 2,code.length).split("\" ")[0];
     }  
   };
-}(wysihtml5));
+})(wysihtml5);
 
 (function(wysihtml5) {
   wysihtml5.commands.formatCode = {
