@@ -1,4 +1,4 @@
-!function($, wysi) {
+(function($, wysi) {
     "use strict";
 
     var tpl = {
@@ -674,7 +674,7 @@
         }
     };
 
-}(window.jQuery, window.wysihtml5);
+})(window.jQuery, window.wysihtml5);
 
 
 /** Insert Video Functions 
