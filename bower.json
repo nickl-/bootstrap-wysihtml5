@@ -1,8 +1,10 @@
 {
     "name": "bootstrap-wysihtml5",
-    "version": "0.1.0",
-    "main": ["src/bootstrap-wysihtml5.css", "src/bootstrap-wysihtml5.js"],
-    "dependencies": {
-        "wysihtml5": "~0.3.0"
-    }
+    "version": "0.3.0",
+    "main": [
+        "lib/css/wysiwyg-color.css",
+        "src/bootstrap-wysihtml5.css", 
+        "lib/js/wysihtml5-0.5.0.js",
+        "src/bootstrap-wysihtml5.js"
+    ],
 }
