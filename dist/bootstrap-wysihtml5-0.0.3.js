@@ -6,7 +6,7 @@
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li class='dropdown'>" +
               "<a class='btn dropdown-toggle" + size + "' data-toggle='dropdown' href='#'>" +
-              "<i class='icon-font'></i>&nbsp;<span class='current-font'>" + locale.font_styles.normal + "</span>&nbsp;<b class='caret'></b>" +
+              "<span class='current-font'>" + locale.font_styles.normal + "</span>&nbsp;<b class='caret'></b>" +
               "</a>" +
               "<ul class='dropdown-menu'>" +
                 "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='div' tabindex='-1'>" + locale.font_styles.normal + "</a></li>" +
@@ -89,7 +89,7 @@
             "</li>";
         },
 
-        "video": function(locale) { 
+        "video": function(locale) {
 	        return "<li>" +
 	              "<div class='bootstrap-wysihtml5-insert-video-modal modal hide fade'>" +
 	                  "<div class='modal-header'>" +
@@ -111,7 +111,7 @@
 	              "</div>" +
 	              "<a class='btn' data-wysihtml5-command='insertVideo' title='" + locale.video.insert + "'><i class='icon-film'></i></a>" +
 	         "</li>";
-        },     
+        },
 
         "html": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
@@ -131,14 +131,23 @@
 	          "</li>";
          },
 
+        "speech": function(locale, options) {
+	          var size = (options && options.size) ? ' btn-'+options.size : '';
+	          return "<li>" +
+	            "<div class='btn-group'>" +
+	              "<a class='btn " + size + "' data-wysihtml5-command='insertSpeech' title='" + locale.speech.insert + "'><i class='iconic-mic'></i></a>" +
+	            "</div>" +
+	          "</li>";
+         },
+
         "color": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li class='dropdown'>" +
               "<a class='btn dropdown-toggle" + size + "' data-toggle='dropdown' href='#' tabindex='-1'>" +
-                "<span class='current-color'>" + locale.colours.black + "</span>&nbsp;<b class='caret'></b>" +
+                "<span class='icon-color'><img src='/assets/bootstrap-wysihtml5/lib/img/icon-color.png'></span>&nbsp;<b class='caret'></b>" +
               "</a>" +
               "<ul class='dropdown-menu'>" +
-                "<li><div class='wysihtml5-colors' data-wysihtml5-command-value='black'></div><a class='wysihtml5-colors-title' data-wysihtml5-command='foreColor' data-wysihtml5-command-value='black'>" + locale.colours.black + "</a></li>" +
+                "<li><div class='wysihtml5-colors current-color' data-wysihtml5-command-value='black'></div><a class='wysihtml5-colors-title' data-wysihtml5-command='foreColor' data-wysihtml5-command-value='black'>" + locale.colours.black + "</a></li>" +
                 "<li><div class='wysihtml5-colors' data-wysihtml5-command-value='silver'></div><a class='wysihtml5-colors-title' data-wysihtml5-command='foreColor' data-wysihtml5-command-value='silver'>" + locale.colours.silver + "</a></li>" +
                 "<li><div class='wysihtml5-colors' data-wysihtml5-command-value='gray'></div><a class='wysihtml5-colors-title' data-wysihtml5-command='foreColor' data-wysihtml5-command-value='gray'>" + locale.colours.gray + "</a></li>" +
                 "<li><div class='wysihtml5-colors' data-wysihtml5-command-value='maroon'></div><a class='wysihtml5-colors-title' data-wysihtml5-command='foreColor' data-wysihtml5-command-value='maroon'>" + locale.colours.maroon + "</a></li>" +
@@ -242,6 +251,13 @@
                     if (key == "format-code") {
                         this.initFormatCode(toolbar);
                     }
+
+//                    if(key === "speech") {
+//                        var wh_editor = new window.wysihtml5.Editor(el, options);
+//                        this.initInsertSpeech(toolbar, wh_editor);
+//
+//                    }
+
                 }
             }
 
@@ -260,7 +276,9 @@
             toolbar.find("a[data-wysihtml5-command='foreColor']").click(function(e) {
                 var target = e.target || e.srcElement;
                 var el = $(target);
-                self.toolbar.find('.current-color').text(el.html());
+
+                self.toolbar.find('.current-color').removeClass('current-color');
+                el.addClass('current-color');
             });
 
             this.el.before(toolbar);
@@ -282,6 +300,29 @@
                 self.editor.composer.commands.exec("formatCode");
             });
         },
+
+//        initInsertSpeech: function (toolbar, wh_editor) {
+//            var self = this,
+//                wh_toolbar = new window.wysihtml5.toolbar.Toolbar(wh_editor, toolbar);
+
+//            var wh_editor = new window.wysihtml5.Editor(el, options),
+//                wh_toolbar = new window.wysihtml5.toolbar.Toolbar(wh_editor, toolbar);
+//            {
+//                toolbar:        toolbar,
+//                stylesheets:    "css/stylesheet.css",
+//                parserRules:    wysihtml5ParserRules,
+//                useLineBreaks:  false
+//            });
+
+//            self.container.querySelectorAll("[data-wysihtml5-command=insertSpeech]");
+//            toolbar.find("a[data-wysihtml5-command='insertSpeech']").click(function(e) {
+//                self.editor.composer.commands.exec("insertSpeech");
+//            });
+//            var formatCodeSelector = "a[data-wysihtml5-action='formatCode']";
+//            toolbar.find(formatCodeSelector).click(function (e) {
+//                self.editor.composer.commands.exec("formatCode");
+//            });
+//        },
 
         initInsertImage: function(toolbar, fileUploadOpts) {
             var self = this;
@@ -531,14 +572,15 @@
 
     var defaultOptions = $.fn.wysihtml5.defaultOptions = {
         "font-styles": true,
-        "color": false,
+        "color": true,
         "emphasis": true,
         "lists": true,
-        "html": false,
+        "html": true,
         "link": true,
         "image": true,
-        "video": false,
-        "format-code": false,
+        "video": true,
+        "format-code": true,
+        speech: true,
         events: {},
         parserRules: {
             classes: {
@@ -607,7 +649,10 @@
                 "pre": 1
             }
         },
-        stylesheets: ["./lib/css/wysiwyg-color.css"], // (path_to_project/lib/css/wysiwyg-color.css)
+        stylesheets: ["/assets/bootstrap-wysihtml5/lib/css/wysiwyg-color.css"], // (path_to_project/lib/css/wysiwyg-color.css)
+//        toolbar: {
+//            speech: '<li><a class="btn" data-wysihtml5-command="insertSpeech" title="Voice input" href="javascript:;" unselectable="on"><i class="iconic-mic"></i></a></li>'
+//        },
         locale: "en"
     };
 
@@ -627,9 +672,9 @@
                 h6: "Heading 6"
             },
             emphasis: {
-                bold: "Bold",
-                italic: "Italic",
-                underline: "Underline"
+                bold: '<i class="icon-bold"></i>',
+                italic: '<i class="icon-italic"></i>',
+                underline: "U"
             },
             lists: {
                 unordered: "Unordered list",
@@ -670,6 +715,9 @@
             },
             formatCode: {
                 highlight: "Highlight Code"
+            },
+            speech: {
+                insert: 'Insert Speech recognition.'
             }
         }
     };
@@ -677,9 +725,9 @@
 })(window.jQuery, window.wysihtml5);
 
 
-/** Insert Video Functions 
-* 
-*/ 
+/** Insert Video Functions
+*
+*/
 
 (function(wysihtml5) {
     var NODE_NAME = "IFRAME";
@@ -779,11 +827,11 @@
             return video && video.src;
         }
     };
-}(wysihtml5));
+})(wysihtml5);
 
 (function(wysihtml5) {
   wysihtml5.commands.insertEmbedVideo = {
-    /**     
+    /**
      * @example
      *    wysihtml5.commands.insertEmbedVideo.exec(element, "insertEmbedVideo", "<iframe width="560" height="315" src="http://www.youtube.com/embed/dJfSS0ZXYdo" frameborder="0" allowfullscreen></iframe>");
      */
@@ -806,24 +854,24 @@
       wysihtml5.commands.insertVideo.value(element);
     }
   };
-}(wysihtml5));
+})(wysihtml5);
 
 (function(wysihtml5) {
   wysihtml5.commands.getAttributeValue = {
     exec: function (code,attr){
       return code.substring(parseInt(code.indexOf(attr))+attr.length + 2,code.length).split("\" ")[0];
-    }  
+    }
   };
-}(wysihtml5));
+})(wysihtml5);
 
 (function(wysihtml5) {
   wysihtml5.commands.formatCode = {
   	exec: function(composer) {
 
         var pre = this.state(composer);
-        
+
         if (pre) {
-            
+
             // caret is already within a <pre><code>...</code></pre>
             composer.selection.executeAndRestore(function () {
                 var codeSelector = pre.querySelector("code");
@@ -834,7 +882,7 @@
                 }
             });
         } else {
-                        
+
             // Wrap in <pre><code>...</code></pre>
             var range = composer.selection.getRange();
 
@@ -843,19 +891,19 @@
             var selectedNodes = range.extractContents(),
                 preElem = composer.doc.createElement("pre"),
                 codeElem = composer.doc.createElement("code");
-            
+
             preElem.appendChild(codeElem);
             codeElem.appendChild(selectedNodes);
             range.insertNode(preElem);
             hljs.highlightBlock(codeElem);
             composer.selection.selectNode(preElem);
-            
+
         }
   	},
 
-  	state: function(composer) {        
+  	state: function(composer) {
         var selectedNode = composer.selection.getSelectedNode();
         return wysihtml5.dom.getParentElement(selectedNode, { nodeName: "CODE" }) && wysihtml5.dom.getParentElement(selectedNode, { nodeName: "PRE" });
     }
   };
-}(wysihtml5));
+})(wysihtml5);
