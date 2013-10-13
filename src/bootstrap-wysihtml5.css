@@ -100,3 +100,13 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="blue"] {
 ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
   background: orange !important;
 }
+
+span.icon-color img {
+    padding: 0;
+    margin: -7px -2px -4px -10px;
+}
+
+.current-color {
+    background-color: #000;
+    color: #fff;
+}
