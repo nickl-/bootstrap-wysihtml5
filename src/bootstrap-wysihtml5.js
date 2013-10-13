@@ -89,7 +89,7 @@
             "</li>";
         },
 
-        "video": function(locale) { 
+        "video": function(locale) {
 	        return "<li>" +
 	              "<div class='bootstrap-wysihtml5-insert-video-modal modal hide fade'>" +
 	                  "<div class='modal-header'>" +
@@ -111,7 +111,7 @@
 	              "</div>" +
 	              "<a class='btn' data-wysihtml5-command='insertVideo' title='" + locale.video.insert + "'><i class='icon-film'></i></a>" +
 	         "</li>";
-        },     
+        },
 
         "html": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
@@ -725,9 +725,9 @@
 })(window.jQuery, window.wysihtml5);
 
 
-/** Insert Video Functions 
-* 
-*/ 
+/** Insert Video Functions
+*
+*/
 
 (function(wysihtml5) {
     var NODE_NAME = "IFRAME";
@@ -831,7 +831,7 @@
 
 (function(wysihtml5) {
   wysihtml5.commands.insertEmbedVideo = {
-    /**     
+    /**
      * @example
      *    wysihtml5.commands.insertEmbedVideo.exec(element, "insertEmbedVideo", "<iframe width="560" height="315" src="http://www.youtube.com/embed/dJfSS0ZXYdo" frameborder="0" allowfullscreen></iframe>");
      */
@@ -860,7 +860,7 @@
   wysihtml5.commands.getAttributeValue = {
     exec: function (code,attr){
       return code.substring(parseInt(code.indexOf(attr))+attr.length + 2,code.length).split("\" ")[0];
-    }  
+    }
   };
 })(wysihtml5);
 
@@ -869,9 +869,9 @@
   	exec: function(composer) {
 
         var pre = this.state(composer);
-        
+
         if (pre) {
-            
+
             // caret is already within a <pre><code>...</code></pre>
             composer.selection.executeAndRestore(function () {
                 var codeSelector = pre.querySelector("code");
@@ -882,7 +882,7 @@
                 }
             });
         } else {
-                        
+
             // Wrap in <pre><code>...</code></pre>
             var range = composer.selection.getRange();
 
@@ -891,17 +891,17 @@
             var selectedNodes = range.extractContents(),
                 preElem = composer.doc.createElement("pre"),
                 codeElem = composer.doc.createElement("code");
-            
+
             preElem.appendChild(codeElem);
             codeElem.appendChild(selectedNodes);
             range.insertNode(preElem);
             hljs.highlightBlock(codeElem);
             composer.selection.selectNode(preElem);
-            
+
         }
   	},
 
-  	state: function(composer) {        
+  	state: function(composer) {
         var selectedNode = composer.selection.getSelectedNode();
         return wysihtml5.dom.getParentElement(selectedNode, { nodeName: "CODE" }) && wysihtml5.dom.getParentElement(selectedNode, { nodeName: "PRE" });
     }
