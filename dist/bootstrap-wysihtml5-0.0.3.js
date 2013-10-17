@@ -674,7 +674,7 @@
             emphasis: {
                 bold: '<i class="icon-bold"></i>',
                 italic: '<i class="icon-italic"></i>',
-                underline: "U"
+                underline: '<i class="icon-underline"></i>'
             },
             lists: {
                 unordered: "Unordered list",
